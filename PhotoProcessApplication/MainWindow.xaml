@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoProcessApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Photo Process Application" Height="450" Width="800">
     <Grid>
-
+        <Label Content="SD Card" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+        <Label Content="Picture Folder" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+        <Label Content="Session ID" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="97,42,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" Name="ImportSourceDir"/>
+        <Button Content="Browse" HorizontalAlignment="Left" Margin="353,41,0,0" VerticalAlignment="Top" Click="ImportSourceButton_Click" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Margin="97,73,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" Name="ImportTargetDir"/>
+        <Button Content="Browse" HorizontalAlignment="Left" Margin="353,72,0,0" VerticalAlignment="Top" Click="ImportTargetButton_Click" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Margin="97,13,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Name="SessionId" MaxLength="4"/>
+        <Button Content="Import Photos" HorizontalAlignment="Left" Margin="97,104,0,0" VerticalAlignment="Top" Width="250" Click="ImportButton_Click"/>
+        <Border Margin="10,129,387,10" 
+                BorderThickness="1"
+                BorderBrush="Black">
+            <ScrollViewer >
+                <TextBlock Margin="3,3,3,3"
+                           Text="" Height="Auto" Width="Auto"  Name="ImportStatus"/>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>
