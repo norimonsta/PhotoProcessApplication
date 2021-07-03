@@ -90,7 +90,7 @@ namespace PhotoProcessApplication
 
         private void ImportFiles(string importSourceDir, string ImportTargetDir)
         {
-            foreach (string sourceFilePath in Directory.GetFiles(importSourceDir, "*.*", SearchOption.AllDirectories))
+            foreach (string sourceFilePath in Directory.GetFiles(importSourceDir, "*.jpg", SearchOption.AllDirectories))
             {
                 var targetFilePath = sourceFilePath.Replace(importSourceDir, ImportTargetDir);
                 File.Copy(sourceFilePath, targetFilePath, true);
