@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoProcessApplication"
         mc:Ignorable="d"
-        Title="Photo Process Application" Height="450" Width="850">
+        Title="Photo Process Application" Height="600" Width="1000">
     <Window.Resources>
         <!-- One style for each *type* of control on the window -->
         <Style TargetType="TextBox">
