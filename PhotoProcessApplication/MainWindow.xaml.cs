@@ -26,20 +26,16 @@ namespace PhotoProcessApplication
             InitializeComponent();
         }
 
+
+        #region Import
         private void ImportSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            using var dialog = new System.Windows.Forms.FolderBrowserDialog();
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                ImportSourceDir.Text = dialog.SelectedPath;
+            ImportSourceDir.Text = FileHelper.BrowseDir();
         }
 
         private void ImportTargetButton_Click(object sender, RoutedEventArgs e)
         {
-            using var dialog = new System.Windows.Forms.FolderBrowserDialog();
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                ImportTargetDir.Text = dialog.SelectedPath;
+            ImportTargetDir.Text = FileHelper.BrowseDir();
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -52,11 +48,12 @@ namespace PhotoProcessApplication
                 if (string.IsNullOrWhiteSpace(sourceDir)) { LogImportError("SD Card directory required."); return; }
                 if (!Directory.Exists(sourceDir)) { LogImportError("Invalid SD Card directory."); return; }
                 if (string.IsNullOrWhiteSpace(targetDir)) { LogImportError("Picture Folder directory required."); return; }
-                EnsureImportTargets(sourceDir, targetDir);
-                ImportFiles(sourceDir, targetDir);
-                OpenFileExplorer(targetDir);
+                FileHelper.CopyImages(sourceDir, targetDir, LogImportMessage);
+                LogImportMessage("Copy completed.");
+                ExportSourceDir.Text = targetDir;
+                FileHelper.OpenFileExplorer(targetDir);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogImportError(ex.Message);
             }
@@ -78,29 +75,65 @@ namespace PhotoProcessApplication
             ImportStatus.Foreground = new SolidColorBrush(Colors.Red);
             ImportStatus.Text += $"{Environment.NewLine}{message}";
         }
+        #endregion
 
-        private void EnsureImportTargets(string importSourceDir, string importTargetDir)
+        #region Export
+        private void ExportSourceButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!Directory.Exists(ImportTargetDir.Text)) { Directory.CreateDirectory(ImportTargetDir.Text); }
-            foreach (string dirPath in Directory.GetDirectories(importSourceDir, "*", SearchOption.AllDirectories))
+            ExportSourceDir.Text = FileHelper.BrowseDir();
+        }
+
+        private void ExportTargetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExportTargetDir.Text = FileHelper.BrowseDir();
+        }
+
+        private void ExportHighButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExportPictures();
+        }
+
+        private void ExportLowButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExportPictures();
+        }
+
+        private void ExportPictures()
+        {
+            try
             {
-                Directory.CreateDirectory(dirPath.Replace(importSourceDir, importTargetDir));
+                string sourceDir = ExportSourceDir.Text;
+                string targetDir = ExportTargetDir.Text;
+                ResetExportStatus();
+                if (string.IsNullOrWhiteSpace(sourceDir)) { LogExportError("Picture Folder directory required."); return; }
+                if (!Directory.Exists(sourceDir)) { LogExportError("Invalid Picture Folder directory."); return; }
+                if (string.IsNullOrWhiteSpace(targetDir)) { LogExportError("USB Flash Drive directory required."); return; }
+                FileHelper.CopyImages(sourceDir, targetDir, LogExportMessage);
+                LogExportMessage("Copy completed.");
+            }
+            catch (Exception ex)
+            {
+                LogExportError(ex.Message);
             }
         }
 
-        private void ImportFiles(string importSourceDir, string ImportTargetDir)
+        private void ResetExportStatus()
         {
-            foreach (string sourceFilePath in Directory.GetFiles(importSourceDir, "*.jpg", SearchOption.AllDirectories))
-            {
-                var targetFilePath = sourceFilePath.Replace(importSourceDir, ImportTargetDir);
-                File.Copy(sourceFilePath, targetFilePath, true);
-                LogImportMessage($"{targetFilePath} copied.");
-            }
+            ExportStatus.Text = string.Empty;
         }
 
-        private void OpenFileExplorer(string dir)
+        private void LogExportMessage(string message)
         {
-            System.Diagnostics.Process.Start("explorer", dir);
+            ExportStatus.Foreground = new SolidColorBrush(Colors.Black);
+            ExportStatus.Text += $"{Environment.NewLine}{message}";
         }
+
+        private void LogExportError(string message)
+        {
+            ExportStatus.Foreground = new SolidColorBrush(Colors.Red);
+            ExportStatus.Text += $"{Environment.NewLine}{message}";
+        }
+        #endregion
+
     }
 }

@@ -5,23 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoProcessApplication"
         mc:Ignorable="d"
-        Title="Photo Process Application" Height="450" Width="800">
+        Title="Photo Process Application" Height="450" Width="863">
     <Grid>
-        <Label Content="SD Card" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-        <Label Content="Picture Folder" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-        <Label Content="Session ID" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="97,42,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" Name="ImportSourceDir"/>
-        <Button Content="Browse" HorizontalAlignment="Left" Margin="353,41,0,0" VerticalAlignment="Top" Click="ImportSourceButton_Click" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="97,73,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" Name="ImportTargetDir"/>
-        <Button Content="Browse" HorizontalAlignment="Left" Margin="353,72,0,0" VerticalAlignment="Top" Click="ImportTargetButton_Click" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="97,13,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Name="SessionId" MaxLength="4"/>
-        <Button Content="Import Photos" HorizontalAlignment="Left" Margin="97,104,0,0" VerticalAlignment="Top" Width="250" Click="ImportButton_Click"/>
-        <Border Margin="10,129,387,10" 
+        <Grid HorizontalAlignment="Left" Height="115" Margin="10,9,0,0" VerticalAlignment="Top" Width="403">
+            <Label Content="SD Card" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top"/>
+            <Label Content="Picture Folder" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top"/>
+            <Label Content="Session ID" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Margin="87,33,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" x:Name="ImportSourceDir"/>
+            <Button Content="Browse" HorizontalAlignment="Left" Margin="343,32,0,0" VerticalAlignment="Top" Click="ImportSourceButton_Click" Width="60"/>
+            <TextBox HorizontalAlignment="Left" Margin="87,64,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" x:Name="ImportTargetDir"/>
+            <Button Content="Browse" HorizontalAlignment="Left" Margin="343,63,0,0" VerticalAlignment="Top" Click="ImportTargetButton_Click" Width="60"/>
+            <TextBox HorizontalAlignment="Left" Margin="87,4,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" x:Name="SessionId" MaxLength="4"/>
+            <Button Content="Import Photos" HorizontalAlignment="Left" Margin="87,95,0,0" VerticalAlignment="Top" Width="250" Click="ImportButton_Click"/>
+        </Grid>
+        <Border Margin="10,129,450,10" 
                 BorderThickness="1"
                 BorderBrush="Black">
             <ScrollViewer >
                 <TextBlock Margin="3,3,3,3"
-                           Text="" Height="Auto" Width="Auto"  Name="ImportStatus"/>
+                           Text="" Height="Auto" Width="Auto"  x:Name="ImportStatus"/>
+            </ScrollViewer>
+        </Border>
+        <Grid HorizontalAlignment="Left" Height="115" Margin="438,9,0,0" VerticalAlignment="Top" Width="415">
+            <Label Content="Picture Folder" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top"/>
+            <Label Content="USB Flash Drive" HorizontalAlignment="Left" Margin="0,32,0,0" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Margin="94,5,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" x:Name="ExportSourceDir"/>
+            <Button Content="Browse" HorizontalAlignment="Left" Margin="350,4,0,0" VerticalAlignment="Top" Click="ExportSourceButton_Click" Width="60"/>
+            <TextBox HorizontalAlignment="Left" Margin="94,36,0,0" Text="" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="250" x:Name="ExportTargetDir"/>
+            <Button Content="Browse" HorizontalAlignment="Left" Margin="350,35,0,0" VerticalAlignment="Top" Click="ExportTargetButton_Click" Width="60"/>
+            <Button Content="Export High Res" HorizontalAlignment="Left" Margin="94,65,0,0" VerticalAlignment="Top" Width="250" Click="ExportHighButton_Click"/>
+            <Button Content="Export Low Res" HorizontalAlignment="Left" Margin="94,95,0,0" VerticalAlignment="Top" Width="250" Click="ExportLowButton_Click"/>
+        </Grid>
+        <Border Margin="438,129,10,10" 
+                BorderThickness="1"
+                BorderBrush="Black">
+            <ScrollViewer >
+                <TextBlock Margin="3,3,3,3"
+                           Text="" Height="Auto" Width="Auto"  x:Name="ExportStatus"/>
             </ScrollViewer>
         </Border>
     </Grid>
