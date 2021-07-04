@@ -110,6 +110,7 @@ namespace PhotoProcessApplication
                 if (string.IsNullOrWhiteSpace(targetDir)) { LogExportError("USB Flash Drive directory required."); return; }
                 FileHelper.CopyImages(sourceDir, targetDir, LogExportMessage);
                 LogExportMessage("Copy completed.");
+                MessageBox.Show("Copy completed");
             }
             catch (Exception ex)
             {
