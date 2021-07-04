@@ -10,14 +10,18 @@ namespace PhotoProcessApplication
     class FileHelper
     {
 
-        public static void CopyImages(string sourceDir, string targetDir, Action<string> logMessage)
+        public static void CopyImages(string sourceDir, string targetDir, string filePrefix = null,  Action<string> logMessage = null)
         {
             EnsureTargetDirs(sourceDir, targetDir);
             foreach (string sourceFilePath in Directory.GetFiles(sourceDir, "*.jpg", SearchOption.AllDirectories))
             {
                 var targetFilePath = sourceFilePath.Replace(sourceDir, targetDir);
-                File.Copy(sourceFilePath, targetFilePath, true);
-                logMessage($"{targetFilePath} copied.");
+                if (filePrefix != null)
+                {
+                    targetFilePath = Path.Combine(Path.GetDirectoryName(targetFilePath), $"{filePrefix}-{Path.GetFileName(targetFilePath)}");
+                }
+                File.Copy(sourceFilePath, targetFilePath, false);
+                logMessage?.Invoke($"{targetFilePath} copied.");
             }
         }
 

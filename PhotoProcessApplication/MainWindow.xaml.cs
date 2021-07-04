@@ -45,10 +45,11 @@ namespace PhotoProcessApplication
                 string sourceDir = ImportSourceDir.Text;
                 string targetDir = System.IO.Path.Combine(ImportTargetDir.Text, SessionId.Text);
                 ResetImportStatus();
+                if (string.IsNullOrWhiteSpace(SessionId.Text)){ LogImportError("Session ID required."); return; }
                 if (string.IsNullOrWhiteSpace(sourceDir)) { LogImportError("SD Card directory required."); return; }
                 if (!Directory.Exists(sourceDir)) { LogImportError("Invalid SD Card directory."); return; }
                 if (string.IsNullOrWhiteSpace(targetDir)) { LogImportError("Picture Folder directory required."); return; }
-                FileHelper.CopyImages(sourceDir, targetDir, LogImportMessage);
+                FileHelper.CopyImages(sourceDir, targetDir, SessionId.Text, LogImportMessage);
                 LogImportMessage("Copy completed.");
                 ExportSourceDir.Text = targetDir;
                 FileHelper.OpenFileExplorer(targetDir);
@@ -108,7 +109,7 @@ namespace PhotoProcessApplication
                 if (string.IsNullOrWhiteSpace(sourceDir)) { LogExportError("Picture Folder directory required."); return; }
                 if (!Directory.Exists(sourceDir)) { LogExportError("Invalid Picture Folder directory."); return; }
                 if (string.IsNullOrWhiteSpace(targetDir)) { LogExportError("USB Flash Drive directory required."); return; }
-                FileHelper.CopyImages(sourceDir, targetDir, LogExportMessage);
+                FileHelper.CopyImages(sourceDir, targetDir, logMessage:LogExportMessage);
                 LogExportMessage("Copy completed.");
                 MessageBox.Show("Copy completed");
             }
