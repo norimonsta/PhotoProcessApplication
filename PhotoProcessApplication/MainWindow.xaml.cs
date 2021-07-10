@@ -31,11 +31,13 @@ namespace PhotoProcessApplication
         private void ImportSourceButton_Click(object sender, RoutedEventArgs e)
         {
             ImportSourceDir.Text = FileHelper.BrowseDir();
+            BindingOperations.GetBindingExpression(ImportSourceDir, TextBox.TextProperty).UpdateSource();
         }
 
         private void ImportTargetButton_Click(object sender, RoutedEventArgs e)
         {
             ImportTargetDir.Text = FileHelper.BrowseDir();
+            BindingOperations.GetBindingExpression(ImportTargetDir, TextBox.TextProperty).UpdateSource();
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -82,11 +84,13 @@ namespace PhotoProcessApplication
         private void ExportSourceButton_Click(object sender, RoutedEventArgs e)
         {
             ExportSourceDir.Text = FileHelper.BrowseDir();
+            BindingOperations.GetBindingExpression(ExportSourceDir, TextBox.TextProperty).UpdateSource();
         }
 
         private void ExportTargetButton_Click(object sender, RoutedEventArgs e)
         {
             ExportTargetDir.Text = FileHelper.BrowseDir();
+            BindingOperations.GetBindingExpression(ExportTargetDir, TextBox.TextProperty).UpdateSource();
         }
 
         private void ExportHighButton_Click(object sender, RoutedEventArgs e)
