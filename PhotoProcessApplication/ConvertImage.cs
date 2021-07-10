@@ -26,10 +26,13 @@ namespace PhotoProcessApplication
             };
             process.Start();
             var errorMsg = process.StandardError.ReadToEnd();
+            var msg = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            
             if (process.ExitCode != 0 || !string.IsNullOrEmpty(errorMsg))
                 return Result.WithError($"Image conversion failed. {errorMsg}");
 
-            return Result.WithSuccess(process.StandardOutput.ReadToEnd());
+            return Result.WithSuccess(msg);
 
         }
     }
