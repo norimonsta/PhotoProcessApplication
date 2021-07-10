@@ -54,6 +54,7 @@ namespace PhotoProcessApplication
                 FileHelper.CopyImages(sourceDir, targetDir, SessionId.Text, LogImportMessage);
                 LogImportMessage("Copy completed.");
                 ExportSourceDir.Text = targetDir;
+                BindingOperations.GetBindingExpression(ExportSourceDir, TextBox.TextProperty).UpdateSource();
                 FileHelper.OpenFileExplorer(targetDir);
             }
             catch (Exception ex)
@@ -116,9 +117,9 @@ namespace PhotoProcessApplication
             try
             {
                 string sourceDir = ExportSourceDir.Text;
-                string targetDir = System.IO.Path.Combine(sourceDir, "converted");
+                string targetDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "converted");
                 if (Directory.Exists(targetDir)) Directory.Delete(targetDir, recursive: true);
-                Result result = ConvertImage.StartProcess(sourceDir, targetDir, highRes);
+                Result result = FileHelper.ConvertImages(sourceDir, targetDir, highRes);
                 if (!result.Success)
                 {
                     LogExportError(result.Message);
@@ -148,7 +149,7 @@ namespace PhotoProcessApplication
         {
             try
             {
-                string sourceDir = System.IO.Path.Combine(ExportSourceDir.Text, "converted");
+                string sourceDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "converted");
                 string targetDir = ExportTargetDir.Text;
                 FileHelper.CopyImages(sourceDir, targetDir, logMessage:LogExportMessage);
                 LogExportMessage("Copy completed.");

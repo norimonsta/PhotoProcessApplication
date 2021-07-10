@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,45 @@ namespace PhotoProcessApplication
                 return dialog.SelectedPath;
             return null;
         }
+
+        public static Result ConvertImages(string sourceDir, string targetDir, bool highRes)
+        {
+            EnsureTargetDirs(sourceDir, targetDir);
+            var processStartInfo = new ProcessStartInfo()
+            {
+                FileName = "ConvertImages.bat",
+                WorkingDirectory = Directory.GetCurrentDirectory(),
+                Arguments = $"{sourceDir} {targetDir} {(highRes ? "1" : "0")}",
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = false
+            };
+
+            var process = new Process
+            {
+                StartInfo = processStartInfo,
+                EnableRaisingEvents = true
+            };
+            var errMsg = new StringBuilder();
+            var msg = new StringBuilder();
+            process.Start();
+            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
+                msg.AppendLine(e.Data);
+            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
+                errMsg.AppendLine(e.Data);
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+
+            if (process.ExitCode != 0 || !string.IsNullOrWhiteSpace(errMsg.ToString()))
+                return Result.WithError($"Image conversion failed. \r\n {errMsg} \r\n {msg}");
+
+            return Result.WithSuccess(msg.ToString());
+
+        }
+
+
         private static void EnsureTargetDirs(string sourceDir, string targetDir)
         {
             if (!Directory.Exists(targetDir)) { Directory.CreateDirectory(targetDir); }
