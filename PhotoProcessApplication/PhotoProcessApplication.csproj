@@ -18,6 +18,7 @@
   <ItemGroup>
     <None Update="ConvertImages.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
