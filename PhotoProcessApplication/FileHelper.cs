@@ -42,7 +42,8 @@ namespace PhotoProcessApplication
 
         public static Result ConvertImages(string sourceDir, string targetDir, bool highRes)
         {
-            EnsureTargetDirs(sourceDir, targetDir);
+            if (!Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
+
             var processStartInfo = new ProcessStartInfo()
             {
                 FileName = "ConvertImages.bat",

@@ -97,42 +97,45 @@ namespace PhotoProcessApplication
         private void ExportHighButton_Click(object sender, RoutedEventArgs e)
         {
             ValidateExportInputs();
-            if (ConvertImages(highRes: true))
-            {
-                ExportPictures();
-            }
+            ConvertImages(highRes: true);
         }
 
         private void ExportLowButton_Click(object sender, RoutedEventArgs e)
         {
             ValidateExportInputs();
-            if (ConvertImages(highRes: false))
-            {
-                ExportPictures();
-            }
+            ConvertImages(highRes: false);
         }
 
-        private bool ConvertImages(bool highRes)
+        private void ConvertImages(bool highRes)
         {
             try
             {
                 string sourceDir = ExportSourceDir.Text;
-                string targetDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "converted");
-                if (Directory.Exists(targetDir)) Directory.Delete(targetDir, recursive: true);
-                Result result = FileHelper.ConvertImages(sourceDir, targetDir, highRes);
-                if (!result.Success)
+                string targetDir = ExportTargetDir.Text;
+                ConvertImages(sourceDir, targetDir, highRes);
+                foreach (var subSourceDir in Directory.GetDirectories(sourceDir, "*", SearchOption.AllDirectories))
                 {
-                    LogExportError(result.Message);
-                    return false;
+                    var subTargetDir = subSourceDir.Replace(sourceDir, targetDir);
+                    ConvertImages(subSourceDir, subTargetDir, highRes);
                 }
-                if (!string.IsNullOrEmpty(result.Message)) LogExportMessage(result.Message);
-                return true;
+                LogExportMessage("Copy completed.");
+                MessageBox.Show("Copy completed");
             }
             catch(Exception ex)
             {
                 LogExportError(ex.Message);
-                return false;
             }
+        }
+
+        private void ConvertImages(string sourceDir, string targetDir, bool highRes)
+        {
+            LogExportMessage($"Converting images in {sourceDir} to {targetDir}");
+            Result result = FileHelper.ConvertImages(sourceDir, targetDir, highRes);
+            if (!result.Success)
+            {
+                LogExportError(result.Message);
+            }
+            if (!string.IsNullOrEmpty(result.Message)) LogExportMessage(result.Message);
         }
 
         private void ValidateExportInputs()
@@ -143,22 +146,6 @@ namespace PhotoProcessApplication
             if (string.IsNullOrWhiteSpace(sourceDir)) { LogExportError("Picture Folder directory required."); return; }
             if (!Directory.Exists(sourceDir)) { LogExportError("Invalid Picture Folder directory."); return; }
             if (string.IsNullOrWhiteSpace(targetDir)) { LogExportError("USB Flash Drive directory required."); return; }
-        }
-
-        private void ExportPictures()
-        {
-            try
-            {
-                string sourceDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "converted");
-                string targetDir = ExportTargetDir.Text;
-                FileHelper.CopyImages(sourceDir, targetDir, logMessage:LogExportMessage);
-                LogExportMessage("Copy completed.");
-                MessageBox.Show("Copy completed");
-            }
-            catch (Exception ex)
-            {
-                LogExportError(ex.Message);
-            }
         }
 
         private void ResetExportStatus()
