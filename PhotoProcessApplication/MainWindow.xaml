@@ -30,9 +30,10 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" BorderThickness="0,0,1,0" BorderBrush="Gray" />
+        <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" BorderThickness="0,0,1,0" BorderBrush="Gray" />
         <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,5,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -43,17 +44,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Content="Session ID" Grid.Column="0" Grid.Row="0"/>
             <TextBox x:Name="SessionId" Grid.Column="1" Grid.Row="0" MaxLength="4" Text="{Binding Source={x:Static p:Settings.Default}, Path=ImportSessionId, Mode=TwoWay}"/>
             <Label Content="SD Card" Grid.Column="0" Grid.Row="1"/>
             <TextBox x:Name="ImportSourceDir" Grid.Column="1" Grid.Row="1" Text="{Binding Source={x:Static p:Settings.Default}, Path=ImportSourceDir, Mode=TwoWay}"/>
             <Button Content="Browse" Grid.Column="2" Grid.Row="1" Click="ImportSourceButton_Click" />
-            <Label Content="Picture Folder" Grid.Column="0" Grid.Row="2"/>
-            <TextBox x:Name="ImportTargetDir" Grid.Column="1" Grid.Row="2" Text="{Binding Source={x:Static p:Settings.Default}, Path=ImportTargetDir, Mode=TwoWay}"/>
-            <Button Content="Browse" Click="ImportTargetButton_Click" Grid.Column="2" Grid.Row="2"/>
-            <Button Content="Import Photos" Grid.Column="1" Grid.Row="3" Click="ImportButton_Click"/>
+            <Button Content="Import Photos" Grid.Column="1" Grid.Row="2" Click="ImportButton_Click"/>
         </Grid>
         <Border Grid.Column="1" Grid.Row="2" BorderThickness="1" BorderBrush="Black" Margin="0,0,5,0">
             <ScrollViewer>
@@ -61,6 +58,19 @@
                                Text="" Height="Auto" Width="Auto"  x:Name="ImportStatus"/>
             </ScrollViewer>
         </Border>
+        <Grid Grid.Column="1" Grid.Row="3" Margin="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Content="Picture Folder" Grid.Column="0" Grid.Row="0"/>
+            <TextBox x:Name="ImportTargetDir" Grid.Column="1" Grid.Row="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=ImportTargetDir, Mode=TwoWay}"/>
+            <Button Content="Browse" Click="ImportTargetButton_Click" Grid.Column="2" Grid.Row="0"/>
+        </Grid>
         <Grid Grid.Column="2" Grid.Row="1" Margin="5,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -72,15 +82,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Content="Picture Folder" Grid.Column="0" Grid.Row="0"/>
-            <TextBox x:Name="ExportSourceDir" Grid.Column="1" Grid.Row="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=ExportSourceDir, Mode=TwoWay}"/>
-            <Button Content="Browse" Grid.Column="2" Grid.Row="0" Click="ExportSourceButton_Click"/>
-            <Label Content="USB Flash Drive" Grid.Column="0" Grid.Row="1"/>
-            <TextBox Grid.Column="1" Grid.Row="1" x:Name="ExportTargetDir" Text="{Binding Source={x:Static p:Settings.Default}, Path=ExportTargetDir, Mode=TwoWay}"/>
-            <Button Content="Browse" Grid.Column="2" Grid.Row="1" Click="ExportTargetButton_Click"/>
-            <Button Content="Export High Res" Grid.Column="1" Grid.Row="2" Click="ExportHighButton_Click"/>
-            <Button Content="Export Low Res" Grid.Column="1" Grid.Row="3" Click="ExportLowButton_Click"/>
+            <Label Content="USB Flash Drive" Grid.Column="0" Grid.Row="0"/>
+            <TextBox Grid.Column="1" Grid.Row="0" x:Name="ExportTargetDir" Text="{Binding Source={x:Static p:Settings.Default}, Path=ExportTargetDir, Mode=TwoWay}"/>
+            <Button Content="Browse" Grid.Column="2" Grid.Row="0" Click="ExportTargetButton_Click"/>
+            <Button Content="Export High Res" Grid.Column="1" Grid.Row="1" Click="ExportHighButton_Click"/>
+            <Button Content="Export Low Res" Grid.Column="1" Grid.Row="2" Click="ExportLowButton_Click"/>
         </Grid>
         <Border Grid.Column="2" Grid.Row="2" BorderThickness="1" BorderBrush="Black" Margin="5,0,0,0">
             <ScrollViewer >
@@ -88,5 +96,18 @@
                            Text="" Height="Auto" Width="Auto"  x:Name="ExportStatus"/>
             </ScrollViewer>
         </Border>
+        <Grid Grid.Column="2" Grid.Row="3" Margin="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Content="Picture Folder" Grid.Column="0" Grid.Row="0"/>
+            <TextBox x:Name="ExportSourceDir" Grid.Column="1" Grid.Row="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=ExportSourceDir, Mode=TwoWay}"/>
+            <Button Content="Browse" Grid.Column="2" Grid.Row="0" Click="ExportSourceButton_Click"/>
+        </Grid>
     </Grid>
 </Window>
